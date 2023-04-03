@@ -1,0 +1,30 @@
+[versions]
+android = "7.4.2"
+compose = "2023.03.00"
+compose-compiler = "1.4.4"
+junit = "4.13.2"
+kotlin = "1.8.10"
+
+[libraries]
+core = "androidx.core:core-ktx:1.9.0"
+compose = { group = "androidx.compose", name = "compose-bom", version.ref = "compose" }
+compose-activity = "androidx.activity:activity-compose:1.7.0"
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+espresso = "androidx.test.espresso:espresso-core:3.5.1"
+junit = "junit:junit:4.13.2"
+junit-android = "androidx.test.ext:junit:1.1.5"
+lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "android" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+
+[bundles]
+
