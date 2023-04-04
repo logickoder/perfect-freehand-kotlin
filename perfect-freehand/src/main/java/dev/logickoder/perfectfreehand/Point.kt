@@ -6,15 +6,19 @@ import java.util.Objects
 /**
  * Represents a point in 2D space, with [x] and [y] coordinates.
  *
- * @param x The x-coordinate of the point.
- * @param y The y-coordinate of the point.
- * @param p The pressure of the point. Defaults to [DEFAULT_PRESSURE].
+ * @property x The x-coordinate of the point.
+ * @property y The y-coordinate of the point.
+ * @property pressure The pressure of the point. Defaults to [DEFAULT_PRESSURE].
  */
 class Point(
-    val x: Double,
-    val y: Double,
-    val p: Double = DEFAULT_PRESSURE,
+    x: Number,
+    y: Number,
+    val pressure: Double = DEFAULT_PRESSURE,
 ) {
+    val x = x.toDouble()
+
+    val y = y.toDouble()
+
     override fun equals(other: Any?): Boolean = when {
         other === this -> true
         other !is Point -> false

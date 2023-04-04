@@ -7,7 +7,7 @@ import kotlin.math.sqrt
 /**
  * @return a new [Point] object with the negated x and y coordinates of this point.
  */
-operator fun Point.unaryMinus() = Point(-x, -y, p)
+operator fun Point.unaryMinus() = Point(-x, -y, pressure)
 
 /**
  * Returns a new [Point] whose x and y coordinates are the sum of the corresponding
@@ -16,7 +16,7 @@ operator fun Point.unaryMinus() = Point(-x, -y, p)
  * @param other the [Point] to add to this [Point].
  * @return a new [Point] with the sum of the two points' coordinates.
  */
-operator fun Point.plus(other: Point) = Point(x + other.x, y + other.y, other.p)
+operator fun Point.plus(other: Point) = Point(x + other.x, y + other.y, other.pressure)
 
 /**
  * Subtracts the given [other] point from this point and returns a new point as the result.
@@ -24,7 +24,7 @@ operator fun Point.plus(other: Point) = Point(x + other.x, y + other.y, other.p)
  * @param other The point to subtract from this point.
  * @return A new [Point] instance representing the vector from [other] to this point.
  */
-operator fun Point.minus(other: Point) = Point(x - other.x, y - other.y, other.p)
+operator fun Point.minus(other: Point) = Point(x - other.x, y - other.y, other.pressure)
 
 /**
  * Multiplies the components of this point by the corresponding components of the [other] point,
@@ -34,7 +34,7 @@ operator fun Point.minus(other: Point) = Point(x - other.x, y - other.y, other.p
  * @return A new [Point] with x equal to the product of this point's x and the [other] point's x,
  * y equal to the product of this point's y and the [other] point's y, and p equal to the [other] point's p.
  */
-operator fun Point.times(other: Point) = Point(x * other.x, y * other.y, other.p)
+operator fun Point.times(other: Point) = Point(x * other.x, y * other.y, other.pressure)
 
 /**
  * Divides this [Point] by another [Point] element-wise and returns a new [Point].
@@ -44,7 +44,7 @@ operator fun Point.times(other: Point) = Point(x * other.x, y * other.y, other.p
  * @param other The [Point] to divide by.
  * @return A new [Point] representing the element-wise division of this [Point] by [other].
  */
-operator fun Point.div(other: Point) = Point(x / other.x, y / other.y, other.p)
+operator fun Point.div(other: Point) = Point(x / other.x, y / other.y, other.pressure)
 
 
 /**
@@ -54,7 +54,7 @@ operator fun Point.div(other: Point) = Point(x / other.x, y / other.y, other.p)
  * @param factor The scalar value to multiply this point by.
  * @return A new [Point] with the resulting coordinates.
  */
-operator fun Point.times(factor: Double) = Point(x * factor, y * factor, p)
+operator fun Point.times(factor: Double) = Point(x * factor, y * factor, pressure)
 
 /**
  * Divides this point by the given scaling factor.
@@ -63,7 +63,7 @@ operator fun Point.times(factor: Double) = Point(x * factor, y * factor, p)
  * @param factor the scaling factor to divide by
  * @return a new point representing the result of the division
  */
-operator fun Point.div(factor: Double) = Point(x / factor, y / factor, p)
+operator fun Point.div(factor: Double) = Point(x / factor, y / factor, pressure)
 
 
 /**
@@ -74,7 +74,7 @@ operator fun Point.div(factor: Double) = Point(x / factor, y / factor, p)
  *
  * @return The perpendicular point of this point.
  */
-fun Point.perpendicular() = Point(y, -x, p)
+val Point.perpendicular get() = Point(y, -x, pressure)
 
 
 /**
@@ -126,7 +126,7 @@ fun Point.rotateAround(c: Point, r: Double): Point {
     val py = y - c.y
     val nx = px * cos - py * sin
     val ny = px * sin + py * cos
-    return Point(nx + c.x, ny + c.y, p)
+    return Point(nx + c.x, ny + c.y, pressure)
 }
 
 /**

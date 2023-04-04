@@ -8,7 +8,7 @@ package dev.logickoder.perfectfreehand
  * @property distance The distance from this point and the previous point.
  * @property runningLength The running length of the line at this point.
  */
-data class StrokePoint(
+internal data class StrokePoint(
     val point: Point,
     var vector: Point,
     val distance: Double,
