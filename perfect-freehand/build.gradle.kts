@@ -39,5 +39,5 @@ publishing {
 }
 
 dependencies {
-//    implementation(libs.perfect.freehand)
+    implementation(libs.perfect.freehand)
 }
