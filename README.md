@@ -265,13 +265,14 @@ to `getStroke`.
 
 ### Support
 
-Need help? Please [open an issue](https://github.com/logickoder/perfect-freehand/issues/new) for
+Need help? Please [open an issue](https://github.com/logickoder/perfect-freehand-kotlin/issues/new)
+for
 support.
 
 ### Discussion
 
 Have an idea or casual question? Visit
-the [discussion page](https://github.com/logickoder/perfect-freehand/discussions).
+the [discussion page](https://github.com/logickoder/perfect-freehand-kotlin/discussions).
 
 ### License
 
