@@ -13,11 +13,11 @@ import java.util.Objects
 class Point(
     x: Number,
     y: Number,
-    val pressure: Double = DEFAULT_PRESSURE,
+    val pressure: Float = DEFAULT_PRESSURE,
 ) {
-    val x = x.toDouble()
+    val x = x.toFloat()
 
-    val y = y.toDouble()
+    val y = y.toFloat()
 
     override fun equals(other: Any?): Boolean = when {
         other === this -> true
@@ -28,6 +28,6 @@ class Point(
     override fun hashCode() = Objects.hash(x, y)
 
     companion object {
-        const val DEFAULT_PRESSURE = 0.5
+        const val DEFAULT_PRESSURE = 0.5f
     }
 }

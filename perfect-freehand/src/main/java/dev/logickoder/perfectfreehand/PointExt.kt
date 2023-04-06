@@ -54,7 +54,7 @@ operator fun Point.div(other: Point) = Point(x / other.x, y / other.y, other.pre
  * @param factor The scalar value to multiply this point by.
  * @return A new [Point] with the resulting coordinates.
  */
-operator fun Point.times(factor: Double) = Point(x * factor, y * factor, pressure)
+operator fun Point.times(factor: Float) = Point(x * factor, y * factor, pressure)
 
 /**
  * Divides this point by the given scaling factor.
@@ -63,7 +63,7 @@ operator fun Point.times(factor: Double) = Point(x * factor, y * factor, pressur
  * @param factor the scaling factor to divide by
  * @return a new point representing the result of the division
  */
-operator fun Point.div(factor: Double) = Point(x / factor, y / factor, pressure)
+operator fun Point.div(factor: Float) = Point(x / factor, y / factor, pressure)
 
 
 /**
@@ -91,7 +91,7 @@ val Point.unit get() = this / this.length
  * @param t the interpolation factor, must be between 0 and 1
  * @return the linearly interpolated point
  */
-fun Point.lerp(b: Point, t: Double) = this + ((b - this) * t)
+fun Point.lerp(b: Point, t: Float) = this + ((b - this) * t)
 
 /**
  * Calculates the midpoint between this [Point] and [b].
@@ -99,7 +99,7 @@ fun Point.lerp(b: Point, t: Double) = this + ((b - this) * t)
  * @param b the second point
  * @return the midpoint between this [Point] and [b]
  */
-fun Point.midpoint(b: Point) = lerp(b, 0.5)
+fun Point.midpoint(b: Point) = lerp(b, 0.5f)
 
 
 /**
@@ -110,7 +110,7 @@ fun Point.midpoint(b: Point) = lerp(b, 0.5)
  * @param d The distance from point [b] to the projected point.
  * @return The projected point.
  */
-fun Point.project(b: Point, d: Double) = this + ((b - this) * (d / (b - this).length))
+fun Point.project(b: Point, d: Float) = this + ((b - this) * (d / (b - this).length))
 
 /**
  * Rotates a point around another point by the given angle in radians.
@@ -132,7 +132,7 @@ fun Point.rotateAround(c: Point, r: Double): Point {
 /**
  * @return The length of the point.
  */
-val Point.length: Double get() = sqrt(lengthSqr())
+val Point.length: Float get() = sqrt(lengthSqr())
 
 /**
  * Returns the square of the length of the point from the origin (0, 0).
@@ -147,7 +147,7 @@ fun Point.lengthSqr() = x * x + y * y
  * @param b the second point
  * @return the distance between this [Point] and [b]
  */
-fun Point.distance(b: Point): Double = (this - b).length
+fun Point.distance(b: Point) = (this - b).length
 
 /**
  * Returns the square of the Euclidean distance between this [Point] and [b].

@@ -37,6 +37,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += listOf("-Xcontext-receivers")
     }
     buildFeatures {
         compose = true
@@ -47,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":perfect-freehand"))
 
     implementation(libs.core)
     implementation(libs.lifecycle)
@@ -56,6 +58,7 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material.icon)
 
     testImplementation(libs.junit)
 

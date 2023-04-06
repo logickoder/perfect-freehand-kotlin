@@ -8,15 +8,15 @@ object PerfectFreehand {
     /**
      * This is the rate of change for simulated pressure. It could be an option.
      */
-    private const val RATE_OF_PRESSURE_CHANGE = 0.275
+    private const val RATE_OF_PRESSURE_CHANGE = 0.275f
 
     /**
      * Compute a radius based on the pressure.
      *
      * @return the stroke's radius, given its size, thinning and pressure.
      */
-    private fun getStrokeRadius(size: Double, thinning: Double, pressure: Double): Double {
-        return size * (0.5 - thinning * (0.5 - pressure))
+    private fun getStrokeRadius(size: Float, thinning: Float, pressure: Float): Float {
+        return size * (0.5f - thinning * (0.5f - pressure))
     }
 
     /**
@@ -38,12 +38,12 @@ object PerfectFreehand {
      */
     fun getStroke(
         points: List<Point>,
-        size: Double = 16.0,
-        thinning: Double = 0.7,
-        smoothing: Double = 0.5,
-        streamline: Double = 0.5,
-        taperStart: Double = 0.0,
-        taperEnd: Double = 0.0,
+        size: Float = 16f,
+        thinning: Float = 0.7f,
+        smoothing: Float = 0.5f,
+        streamline: Float = 0.5f,
+        taperStart: Float = 0.0f,
+        taperEnd: Float = 0.0f,
         capStart: Boolean = true,
         capEnd: Boolean = true,
         simulatePressure: Boolean = true,
@@ -93,11 +93,11 @@ object PerfectFreehand {
      */
     private fun getStrokeOutlinePoints(
         points: List<StrokePoint>,
-        size: Double = 16.0,
-        thinning: Double = 0.7,
-        smoothing: Double = 0.5,
-        taperStart: Double = 0.0,
-        taperEnd: Double = 0.0,
+        size: Float = 16.0f,
+        thinning: Float = 0.7f,
+        smoothing: Float = 0.5f,
+        taperStart: Float = 0.0f,
+        taperEnd: Float = 0.0f,
         capStart: Boolean = true,
         capEnd: Boolean = true,
         simulatePressure: Boolean = true,
@@ -119,18 +119,20 @@ object PerfectFreehand {
         // Previous pressure (start with average of first five pressures,
         // in order to prevent fat starts for every line. Drawn lines
         // almost always start slow!
-        var previousPressure =
-            points.subList(0, 10).map { it.point.pressure }.reduceIndexed { index, acc, curr ->
+        var previousPressure = points
+            .take(10)
+            .map { it.point.pressure }
+            .reduceIndexed { index, acc, curr ->
                 var pressure = curr
 
                 if (simulatePressure) {
                     // Speed of change - how fast should the the pressure changing?
-                    val sp = min(1.0, points[index].distance / size)
+                    val sp = min(1f, points[index].distance / size)
                     // Rate of change - how much of a change is there?
-                    val rp = min(1.0, 1.0 - sp)
+                    val rp = min(1f, 1f - sp)
                     // Accelerate the pressure
                     pressure = min(
-                        1.0,
+                        1f,
                         acc + (rp - acc) * (sp * RATE_OF_PRESSURE_CHANGE)
                     )
                 }
@@ -138,13 +140,14 @@ object PerfectFreehand {
                 (acc + pressure) / 2
             }
 
+
         // The current radius
         var radius = getStrokeRadius(
             size,
             thinning,
             points.last().point.pressure,
         )
-        var firstRadius: Double? = null
+        var firstRadius: Float? = null
 
         var previousVector = points[0].vector
 
@@ -177,20 +180,20 @@ object PerfectFreehand {
             // If not thinning, the current point's radius will be half the size; or
             // otherwise, the size will be based on the current (real or simulated)
             // pressure.
-            radius = if (thinning != 0.0) {
+            radius = if (thinning != 0f) {
                 if (simulatePressure) {
                     // If we're simulating pressure, then do so based on the distance
                     // between the current point and the previous point, and the size
                     // of the stroke. Otherwise, use the input pressure.
-                    val sp = min(1.0, distance / size)
-                    val rp = min(1.0, 1 - sp)
+                    val sp = min(1f, distance / size)
+                    val rp = min(1f, 1 - sp)
                     pressure = min(
-                        1.0,
+                        1f,
                         previousPressure + (rp - previousPressure) * (sp * RATE_OF_PRESSURE_CHANGE)
                     )
                 }
                 getStrokeRadius(size, thinning, pressure)
-            } else size / 2
+            } else size / 2f
 
             if (firstRadius == null) {
                 firstRadius = radius
@@ -203,20 +206,20 @@ object PerfectFreehand {
 
             val taperingStart = if (runningLength < taperStart) {
                 runningLength / taperStart
-            } else 1.0
+            } else 1f
 
             val taperingEnd = if (totalLength - runningLength < taperEnd) {
                 (totalLength - runningLength) / taperEnd
-            } else 1.0
+            } else 1f
 
-            radius = max(0.01, radius * taperingStart.coerceAtMost(taperingEnd))
+            radius = max(0.01f, radius * taperingStart.coerceAtMost(taperingEnd))
 
             // Add points to left and right and Handle sharp corners
             // Find the difference (dot product) between the current and next vector.
             // If the next vector is at more than a right angle to the current vector,
             // draw a cap at the current point.
             val nextVector = if (i < points.lastIndex) points[i + 1].vector else points[i].vector
-            val nextDotProduct = if (i < points.lastIndex) vector.dotProduct(nextVector) else 1.0
+            val nextDotProduct = if (i < points.lastIndex) vector.dotProduct(nextVector) else 1f
             val previousDotProduct = vector.dotProduct(previousVector)
 
             val isPointSharpCorner = previousDotProduct < 0 && !isPrevPointSharpCorner
@@ -229,9 +232,9 @@ object PerfectFreehand {
 
                 val offset = previousVector.perpendicular * radius
 
-                val step = 1.0 / 13
-                var angle = 0.0
-                while (angle <= 1.0) {
+                val step = 1f / 13f
+                var angle = 0f
+                while (angle <= 1f) {
                     temporaryLeft = (point - offset).rotateAround(point, Math.PI * angle)
                     leftPoints += temporaryLeft
 
@@ -314,10 +317,10 @@ object PerfectFreehand {
                     -(firstRadius ?: radius),
                 )
 
-                val step = 1.0 / 13
+                val step = 1f / 13f
                 var angle = step
 
-                while (angle <= 1.0) {
+                while (angle <= 1f) {
                     add(start.rotateAround(firstPoint, Math.PI * 2 * angle))
                     angle += step
                 }
@@ -336,10 +339,10 @@ object PerfectFreehand {
                     capStart -> {
                         // Draw the round cap - add thirteen points rotating the
                         // right point around the start point to the left point
-                        val step = 1.0 / 13
+                        val step = 1f / 13f
                         var angle = step
 
-                        while (angle <= 1.0) {
+                        while (angle <= 1f) {
                             startCap += rightPoints.first()
                                 .rotateAround(firstPoint, Math.PI * angle)
                             angle += step
@@ -350,8 +353,8 @@ object PerfectFreehand {
                         // Draw the flat cap - add a point to the left and right of the start point
                         val cornersVector = leftPoints.first() - rightPoints.first()
 
-                        val offsetA = cornersVector * 0.5
-                        val offsetB = cornersVector * 0.51
+                        val offsetA = cornersVector * 0.5f
+                        val offsetB = cornersVector * 0.51f
 
                         startCap.addAll(
                             listOf(
@@ -381,10 +384,10 @@ object PerfectFreehand {
                     capEnd -> {
                         // Draw the round end cap
                         val start = lastPoint.project(direction, radius)
-                        val step = 1.0 / 29
+                        val step = 1f / 29f
                         var angle = step
 
-                        while (angle < 1) {
+                        while (angle < 1f) {
                             endCap += start.rotateAround(lastPoint, Math.PI * 3 * angle)
                             angle += step
                         }
@@ -393,8 +396,8 @@ object PerfectFreehand {
                     else -> endCap.addAll(
                         listOf(
                             lastPoint + direction * radius,
-                            lastPoint + direction * (radius * 0.99),
-                            lastPoint - direction * (radius * 0.99),
+                            lastPoint + direction * (radius * 0.99f),
+                            lastPoint - direction * (radius * 0.99f),
                             lastPoint - direction * radius
                         )
                     )
@@ -420,10 +423,10 @@ object PerfectFreehand {
      *
      * @return A list of [StrokePoint]s.
      */
-    private fun getStrokePoints(
+    fun getStrokePoints(
         points: List<Point>,
-        size: Double = 16.0,
-        streamline: Double = 0.5,
+        size: Float = 16f,
+        streamline: Float = 0.5f,
         simulatePressure: Boolean = true,
         isComplete: Boolean = false
     ): List<StrokePoint> = buildList {
@@ -431,7 +434,7 @@ object PerfectFreehand {
         if (points.isEmpty()) return@buildList
 
         // find an interpolation level between the points
-        val interpolationFactor = 0.15 + (1 - streamline) * 0.85
+        val interpolationFactor = 0.15f + (1 - streamline) * 0.85f
 
         // If there's only one point, add another point at a 1pt offset
         val pts = kotlin.run {
@@ -442,13 +445,13 @@ object PerfectFreehand {
 
         // We're set this to the latest point, so we can use it to calculate
         // the distance and vector of the next point.
-        var previous = StrokePoint(pts.first(), Point(1, 1), 0.0, 0.0)
+        var previous = StrokePoint(pts.first(), Point(1, 1), 0f, 0f)
 
         // add the first point, which needs no adjustment.
         add(previous)
 
         // We use the runningLength to keep track of the total distance
-        var runningLength = 0.0
+        var runningLength = 0f
 
         // A flag to see whether we've already reached out minimum length
         var hasReachedMinimumLength = false
