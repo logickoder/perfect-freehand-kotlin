@@ -22,6 +22,7 @@ fun Sketcher(
 
     // Draw each stroke.
     lines.forEach { stroke ->
+        // 1. Get the outline points from the input points
         val points = getStroke(
             points = stroke.points,
             size = options.size.value,
@@ -36,9 +37,11 @@ fun Sketcher(
             isComplete = options.isComplete.value,
         )
 
+        // 2. Render the points as a path
         val path = when {
             // If the outline points list is empty, we have nothing to draw.
             points.isEmpty() -> return@forEach
+            // If the list only has one point, draw a dot.
             points.size == 1 -> Path().apply {
                 val x = points.first().x
                 val y = points.first().y
@@ -51,7 +54,7 @@ fun Sketcher(
                     )
                 )
             }
-
+            // Otherwise, draw a line that connects each point with a bezier curve segment.
             else -> Path().apply {
                 moveTo(points[0].x, points[0].y)
                 for (i in 1 until points.lastIndex) {

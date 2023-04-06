@@ -15,7 +15,7 @@ object PerfectFreehand {
      *
      * @return the stroke's radius, given its size, thinning and pressure.
      */
-    private fun getStrokeRadius(size: Float, thinning: Float, pressure: Float): Float {
+    fun getStrokeRadius(size: Float, thinning: Float, pressure: Float): Float {
         return size * (0.5f - thinning * (0.5f - pressure))
     }
 
@@ -91,7 +91,7 @@ object PerfectFreehand {
      *
      * @param isComplete whether the line is complete.
      */
-    private fun getStrokeOutlinePoints(
+    fun getStrokeOutlinePoints(
         points: List<StrokePoint>,
         size: Float = 16.0f,
         thinning: Float = 0.7f,

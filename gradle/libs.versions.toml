@@ -21,6 +21,7 @@ espresso = "androidx.test.espresso:espresso-core:3.5.1"
 junit = "junit:junit:4.13.2"
 junit-android = "androidx.test.ext:junit:1.1.5"
 lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+perfect-freehand = "com.github.logickoder:perfect-freehand:1.0.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android" }
