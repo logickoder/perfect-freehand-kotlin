@@ -48,7 +48,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":perfect-freehand"))
+    implementation(libs.perfect.freehand)
 
     implementation(libs.core)
     implementation(libs.lifecycle)

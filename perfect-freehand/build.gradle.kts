@@ -1,8 +1,8 @@
 @file:Suppress("DSL_SCOPE_VIOLATION")
 
 plugins {
-    id("java-library")
-    id("maven-publish")
+    java
+    `maven-publish`
     alias(libs.plugins.kotlin.jvm)
 }
 
@@ -36,8 +36,4 @@ publishing {
             artifact(javadocJar.get())
         }
     }
-}
-
-dependencies {
-    implementation(libs.perfect.freehand)
 }
