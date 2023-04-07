@@ -283,4 +283,4 @@ the [discussion page](https://github.com/logickoder/perfect-freehand-kotlin/disc
 
 ## Author
 
-- [@steveruizok](https://twitter.com/logickoder)
+- [@logickoder](https://twitter.com/logickoder)
